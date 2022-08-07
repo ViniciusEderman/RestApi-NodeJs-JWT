@@ -1,6 +1,7 @@
 // required express lib:
 const express = require('express');
 const router  = express.Router();
+const mysql = require('../mysql').pool;
 
 //return all products:
 router.get('/', (req, res, next) => {
@@ -11,15 +12,27 @@ router.get('/', (req, res, next) => {
 
 // insert a product:
 router.post('/', (req, res, next) => {
-    const product = {
-       name: req.body.name,
-       price: req.body.price
-    }
 
-    res.status(201).send ({
-        message: 'Inserted a product',
-        productCreated: product
-    });
+    mysql.getConnection((error, connection) => {
+        connection.query(
+            'INSERT INTO products (name, price) VALUES (?, ?)',
+            [req.body.name, req.body.price],
+            (error, result, field) => {
+                connection.release();
+                if(error) {
+                   return res.status(500).send({
+                        error: error,
+                        response: null
+                    });
+                }
+
+                res.status(201).send ({
+                    message: 'Inserted a product with successful',
+                    id_product: result.insertId
+                });
+            }
+        )
+    })
 });
 
 // returns data for only one product:
