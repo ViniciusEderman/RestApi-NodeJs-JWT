@@ -13,25 +13,26 @@ router.get('/', (req, res, next) => {
 // insert a product:
 router.post('/', (req, res, next) => {
 
-    mysql.getConnection((error, connection) => {
-        connection.query(
-            'INSERT INTO products (name, price) VALUES (?, ?)',
-            [req.body.name, req.body.price],
+    mysql.getConnection((error, conn) => {
+        conn.query(
+            'INSERT INTO products (name, value) Values (?,?)',
+            [req.body.name, req.body.value],
             (error, result, field) => {
-                connection.release();
-                if(error) {
-                   return res.status(500).send({
-                        error: error,
-                        response: null
+                conn.release();
+
+                if (error) {
+                    res.status(500).send({
+                       error:  error,
+                       response: null 
                     });
                 }
 
-                res.status(201).send ({
-                    message: 'Inserted a product with successful',
+                res.status(201).send({
+                    mensage: 'The product has been inserted',
                     id_product: result.insertId
                 });
             }
-        );
+        )
     });
 });
 
