@@ -31,8 +31,8 @@ router.post('/', (req, res, next) => {
                     id_product: result.insertId
                 });
             }
-        )
-    })
+        );
+    });
 });
 
 // returns data for only one product:
