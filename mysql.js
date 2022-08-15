@@ -9,4 +9,3 @@ const pool = mysql.createPool({
 });
 
 exports.pool = pool;
-// analisar provaveis erros de env
