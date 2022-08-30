@@ -13,11 +13,10 @@ router.get('/', (req, res, next) => {
 // insert a product:
 router.post('/', (req, res, next) => {
 
-    //problema com esse trexo, tentar resolver(o problema se basea no post-db)
     mysql.getConnection((error, conn) => {
         conn.query(
-            'INSERT INTO products (name, value) Values (?,?)',
-            [req.body.name, req.body.value],
+            'INSERT INTO products (name, price) VALUES (?,?)',
+            [req.body.name, req.body.price],
             (error, result, field) => {
                 conn.release();
 
