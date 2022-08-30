@@ -14,6 +14,12 @@ router.get('/', (req, res, next) => {
 router.post('/', (req, res, next) => {
 
     mysql.getConnection((error, conn) => {
+
+        if(error) {
+            console.log(error);
+            console.log(conn);
+        }
+        
         conn.query(
             'INSERT INTO products (name, price) VALUES (?,?)',
             [req.body.name, req.body.price],
