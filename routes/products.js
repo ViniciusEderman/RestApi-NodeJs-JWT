@@ -19,7 +19,7 @@ router.post('/', (req, res, next) => {
             console.log(error);
             console.log(conn);
         }
-        
+        // commit test 
         conn.query(
             'INSERT INTO products (name, price) VALUES (?,?)',
             [req.body.name, req.body.price],
